@@ -17,7 +17,6 @@ public class ReversiJudge {
             for(int j = -1; j < 2; j++) {
                 if(i == 0 && j == 0) continue;
                 boolean ret = check(board, player, x, y, i, j, 0);
-                System.out.println(String.format("%d, %d = %d[%b]", x, x, board[x][y], ret));
                 if(ret) {
                     return true;
                 }

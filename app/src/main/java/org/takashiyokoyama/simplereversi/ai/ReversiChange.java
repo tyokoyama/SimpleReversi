@@ -43,8 +43,6 @@ public class ReversiChange {
             return false;
         }
 
-        System.out.println(String.format("%d, %d = %d", nextX, nextY, board[nextX][nextY]));
-
         if(board[nextX][nextY] == SPACE) return false;
 
         if(board[nextX][nextY] != SPACE &&

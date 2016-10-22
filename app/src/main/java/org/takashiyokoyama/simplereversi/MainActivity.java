@@ -20,6 +20,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // COM戦
         Button btnCPU = (Button)findViewById(R.id.btnCPU);
         btnCPU.setOnClickListener(this);
+
+        // 中級戦
+        Button btnMiddle = (Button)findViewById(R.id.btnMiddle);
+        btnMiddle.setOnClickListener(this);
+
+        // 中級戦
+        Button btnHard = (Button)findViewById(R.id.btnHard);
+        btnHard.setOnClickListener(this);
     }
 
     @Override
@@ -43,12 +51,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case R.id.btnMiddle: {
+                // 中級
                 Intent intent = new Intent(this, ReversiActivity.class);
                 intent.putExtra("com", 2);
                 startActivity(intent);
                 break;
             }
             case R.id.btnHard: {
+                // 上級
                 Intent intent = new Intent(this, ReversiActivity.class);
                 intent.putExtra("com", 3);
                 startActivity(intent);
