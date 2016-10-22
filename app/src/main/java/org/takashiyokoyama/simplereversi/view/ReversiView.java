@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+import org.takashiyokoyama.simplereversi.ai.ReversiJudge;
 import org.takashiyokoyama.simplereversi.listener.OnBoardTapListener;
 
 /**
@@ -56,7 +57,7 @@ public class ReversiView extends View {
 
         Log.d("TEST", String.format("scaledDensity = %f", mMetrics.scaledDensity));
 
-        p.setARGB(255, 0, 255, 0);
+        p.setARGB(255, 0, 0x66, 0);
         canvas.drawRect(new Rect(0, 0, this.getWidth(), this.getHeight()), p);
 
         p.setARGB(255, 0, 0, 0);
@@ -136,7 +137,7 @@ public class ReversiView extends View {
         mBoard = new int[8][8];
         for(int i = 0; i < mBoard.length; i++) {
             for (int j = 0; j < mBoard[i].length; j++) {
-                mBoard[i][j] = 0;
+                mBoard[i][j] = ReversiJudge.SPACE;
             }
         }
     }

@@ -27,15 +27,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = v.getId();
 
         switch(id) {
-            case R.id.btnHuman:
+            case R.id.btnHuman: {
                 // 対人戦
                 Intent intent = new Intent(this, ReversiActivity.class);
+                intent.putExtra("com", 0);
                 startActivity(intent);
                 break;
-            case R.id.btnCPU:
+            }
+            case R.id.btnCPU: {
                 // COM戦
+                Intent intent = new Intent(this, ReversiActivity.class);
+                intent.putExtra("com", 1);
+                startActivity(intent);
 
                 break;
+            }
+            case R.id.btnMiddle: {
+                Intent intent = new Intent(this, ReversiActivity.class);
+                intent.putExtra("com", 2);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btnHard: {
+                Intent intent = new Intent(this, ReversiActivity.class);
+                intent.putExtra("com", 3);
+                startActivity(intent);
+                break;
+            }
         }
     }
 }

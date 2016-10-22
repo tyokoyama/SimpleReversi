@@ -9,17 +9,38 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="org.takashiyokoyama.simplereversi.MainActivity">
+    tools:context="org.takashiyokoyama.simplereversi.MainActivity"
+    android:background="@mipmap/background">
 
-    <Button
-        android:text="対人戦"
+    <LinearLayout
+        android:orientation="vertical"
+        android:paddingTop="160dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnHuman" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:text="COM戦"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnCPU" />
+        <Button
+            android:text="対人戦"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnHuman" />
+
+        <Button
+            android:text="COM戦（初心者）"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCPU" />
+
+        <Button
+            android:text="COM戦（中級）"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnMiddle" />
+
+        <Button
+            android:text="COM戦（上級者）"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnHard" />
+
+    </LinearLayout>
 </LinearLayout>

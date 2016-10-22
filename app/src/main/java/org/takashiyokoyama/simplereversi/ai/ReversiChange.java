@@ -26,6 +26,7 @@ public class ReversiChange {
                         nextX += i;
                         nextY += j;
                     }
+                    board[x][y] = player;
                 }
             }
         }
