@@ -7,6 +7,7 @@ import android.util.Log;
 
 import org.takashiyokoyama.simplereversi.ai.BeginnerImpl;
 import org.takashiyokoyama.simplereversi.ai.ComIf;
+import org.takashiyokoyama.simplereversi.ai.HardImpl;
 import org.takashiyokoyama.simplereversi.ai.MiddleImpl;
 import org.takashiyokoyama.simplereversi.ai.Place;
 import org.takashiyokoyama.simplereversi.ai.ReversiChange;
@@ -77,7 +78,7 @@ public class ReversiActivity extends AppCompatActivity implements OnBoardTapList
                             break;
                         case 3:
                             // Hard
-                            com = new BeginnerImpl();
+                            com = new HardImpl();
                             break;
                     }
                     Place p = com.next(mBoard, player);

@@ -94,6 +94,10 @@ public class ReversiView extends View {
                 }
             }
         }
+
+        p.setARGB(255, 255, 255, 255);
+        p.setTextSize(16 * mMetrics.scaledDensity);
+        canvas.drawText("黒: " + getCount(ReversiJudge.BLACK) + "白: " + getCount(ReversiJudge.WHITE), 30, this.getHeight() - 50f, p);
     }
 
     @Override
@@ -118,6 +122,20 @@ public class ReversiView extends View {
         }
 
         return super.onTouchEvent(event);
+    }
+
+    private int getCount(int player) {
+        int count = 0;
+
+        for(int i = 0; i < mBoard.length; i++) {
+            for(int j = 0; j < mBoard[i].length; j++) {
+                if(mBoard[i][j] == player) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 
     /***

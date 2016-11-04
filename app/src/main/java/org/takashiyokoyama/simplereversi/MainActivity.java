@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btnMiddle = (Button)findViewById(R.id.btnMiddle);
         btnMiddle.setOnClickListener(this);
 
-        // 中級戦
+        // 上級戦
         Button btnHard = (Button)findViewById(R.id.btnHard);
         btnHard.setOnClickListener(this);
     }
