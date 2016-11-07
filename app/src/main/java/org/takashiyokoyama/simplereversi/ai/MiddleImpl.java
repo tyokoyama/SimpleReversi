@@ -8,53 +8,23 @@ import java.util.ArrayList;
 
 public class MiddleImpl implements ComIf {
 
-    private int[][] mPointTbl = new int[8][8];
+    private int[][] mPointTbl;
     public int[][] getPointTbl() {
         return mPointTbl;
     }
 
     public MiddleImpl() {
         // ポイントテーブルの初期化
-        for(int i = 0; i < mPointTbl.length; i++) {
-            for(int j = 0; j < mPointTbl.length; j++) {
-                mPointTbl[i][j] = 1;
-            }
-        }
-
-        // 端のマスは一番高い
-        mPointTbl[0][0] = 4;
-        mPointTbl[0][mPointTbl.length-1] = 4;
-        mPointTbl[mPointTbl.length-1][0] = 4;
-        mPointTbl[mPointTbl.length-1][mPointTbl.length-1] = 4;
-
-        // 端のマス以外の端は次に高い
-        for(int i = 2; i < mPointTbl.length - 2; i++) {
-            mPointTbl[0][i] = 3;
-            mPointTbl[mPointTbl.length - 1][i] = 3;
-            mPointTbl[i][0] = 3;
-            mPointTbl[i][mPointTbl.length - 1] = 3;
-        }
-
-        // 端のマスを挟むためのマスは高い
-        mPointTbl[1][2] = 2;
-        mPointTbl[1][5] = 2;
-        mPointTbl[2][1] = 2;
-        mPointTbl[2][2] = 2;
-        mPointTbl[2][5] = 2;
-        mPointTbl[2][6] = 2;
-        mPointTbl[5][1] = 2;
-        mPointTbl[5][2] = 2;
-        mPointTbl[5][5] = 2;
-        mPointTbl[5][6] = 2;
-        mPointTbl[6][2] = 2;
-        mPointTbl[6][5] = 2;
-
-        // 端の手前のマスは置くと取られるのでポイントが低い
-        mPointTbl[1][1] = 0;
-        mPointTbl[6][1] = 0;
-        mPointTbl[1][6] = 0;
-        mPointTbl[6][6] = 0;
-
+        mPointTbl = new int[][] {
+                {30, -12, 0, -1, -1, 0, -12, 30},
+                {-12, -15, -3, -3, -3, -3, -15, -12},
+                {0, -3, 0, -1, -1, 0, -3, 0},
+                {-1, -3, -1, -1, -1, -1, -3, -1},
+                {-1, -3, -1, -1, -1, -1, -3, -1},
+                {0, -3, 0, -1, -1, 0, -3, 0},
+                {-12, -15, -3, -3, -3, -3, -15, -12},
+                {30, -12, 0, -1, -1, 0, -12, 30},
+        };
     }
 
     @Override
@@ -68,7 +38,12 @@ public class MiddleImpl implements ComIf {
             for (int j = 0; j < board[i].length; j++) {
                 if (ReversiJudge.judge(board, player, i, j)) {
                     // 置ける
-                    PointPlace p = new PointPlace(i, j, mPointTbl[i][j]);
+                    int[][] planBoard = createCopyBoard(board);
+                    planBoard = ReversiChange.change(planBoard, player, i, j);
+
+                    int sumPoint = getPointSummery(planBoard, player);
+
+                    PointPlace p = new PointPlace(i, j, sumPoint);
                     placeList.add(p);
                 }
             }
@@ -79,6 +54,7 @@ public class MiddleImpl implements ComIf {
 
         PointPlace p = null;
         for(PointPlace pp : placeList) {
+            System.out.println("x = " + pp.x + " y = " + pp.y + " point = " + pp.getPoint());
             if(p == null || p.getPoint() <= pp.getPoint()) {
                 p = pp;
             }
@@ -88,15 +64,42 @@ public class MiddleImpl implements ComIf {
     }
 
     private class PointPlace extends Place {
-        private int point;
+        private int mPoint;
 
         public PointPlace(int x, int y, int point) {
             super(x, y);
+            mPoint = point;
         }
 
         public int getPoint() {
-            return point;
+            return mPoint;
         }
 
+    }
+
+    private int[][] createCopyBoard(int[][] board) {
+        int[][] copy = new int[board.length][board.length];
+
+        // ボードのコピー
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board.length; y++) {
+                copy[x][y] = board[x][y];
+            }
+        }
+
+        return copy;
+    }
+
+    private int getPointSummery(int[][] board, int player) {
+        int sumPoint = 0;
+        for(int m = 0; m < board.length; m++) {
+            for(int n = 0; n < board.length; n++) {
+                if(board[m][n] == player) {
+                    sumPoint += mPointTbl[m][n];
+                }
+            }
+        }
+
+        return sumPoint;
     }
 }
