@@ -51,7 +51,8 @@ public class HardImpl implements ComIf {
             }
         }
 
-        int maxPlace = 0;
+        Place maxPlace = futureList.get(0).getPlace();
+        int maxIndex = 0;
         int maxPoint = -1000;
         for(int i = 0; i < futureList.size(); i++) {
             FutureStatus s = futureList.get(i);
@@ -62,14 +63,20 @@ public class HardImpl implements ComIf {
                     if(s.getPlayer() == player && s.getPlayer() == ReversiJudge.BLACK) {
                         // 黒
                         if(maxPoint < s.getBlackCount()) {
-                            maxPoint = s.getBlackCount();
-                            maxPlace = i;
+                            if(mPointTbl[maxPlace.x][maxPlace.y] <= mPointTbl[s.getPlace().x][s.getPlace().y]) {
+                                maxPoint = s.getBlackCount();
+                                maxPlace = s.getPlace();
+                                maxIndex = i;
+                            }
                         }
                     } else {
                         // 白
                         if(maxPoint < s.getWhiteCount()) {
-                            maxPoint = s.getWhiteCount();
-                            maxPlace = i;
+                            if(mPointTbl[maxPlace.x][maxPlace.y] <= mPointTbl[s.getPlace().x][s.getPlace().y]) {
+                                maxPoint = s.getWhiteCount();
+                                maxPlace = s.getPlace();
+                                maxIndex = i;
+                            }
                         }
                     }
                 } else {
@@ -82,7 +89,7 @@ public class HardImpl implements ComIf {
         }
 
         if(futureList.size() == 0) return null;
-        return futureList.get(maxPlace).getPlace();
+        return futureList.get(maxIndex).getPlace();
     }
 
     private void futureNext(FutureStatus status, int[][] board, int player, int count) {
@@ -106,11 +113,14 @@ public class HardImpl implements ComIf {
         Place minP = placeList.get(0);
         for(Place p : placeList) {
             int[][] planBoard = createCopyBoard(board);
-            planBoard = ReversiChange.change(planBoard, player, p.x, p.y);
+            planBoard = ReversiChange.change(planBoard, enemy, p.x, p.y);
             int currentPoint = getPointSummery(planBoard, enemy);
-            if(maxPoint < currentPoint) {
-                maxPoint = currentPoint;
-                minP = p;
+            if(maxPoint <= currentPoint) {
+                // 置く場所のポイントが大きいマスを優先する
+                if(mPointTbl[minP.x][minP.y] <= mPointTbl[p.x][p.y]) {
+                    maxPoint = currentPoint;
+                    minP = p;
+                }
             }
         }
         // 一番枚数が少ない場所を選択する。
@@ -139,7 +149,9 @@ public class HardImpl implements ComIf {
         status.setNext(s);
 
         if(count <= 10) {
-            futureNext(status.getNext(), board, enemy, count + 1);
+            int[][] planBoard = createCopyBoard(board);
+            planBoard = ReversiChange.change(planBoard, player, minP.x, minP.y);
+            futureNext(status.getNext(), planBoard, enemy, count + 1);
         }
 
     }
